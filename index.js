@@ -25,9 +25,14 @@ const inventory = [
  * Prints out the name of each item in the given array.
  * @param {Item[]} items - array of items
  */
+
+
+
 function logNames(items) {
-  // TODO: use `forEach`
+  items.forEach(item => console.log(item.name));
 }
+console.log("Here are the names of all items:");
+console.log(logNames(inventory));
 
 /**
  * @param {Item[]} items - array of items
@@ -35,7 +40,11 @@ function logNames(items) {
  */
 function getUppercaseNames(items) {
   // TODO: use `map`
+  return items.map(item => item.name.toUpperCase())
 }
+
+console.log("Here are the names in uppercase:");
+console.log(getUppercaseNames(inventory));
 
 /**
  * @param {Item[]} items - array of items
@@ -44,6 +53,11 @@ function getUppercaseNames(items) {
  */
 function getItemById(items, id) {
   // TODO: use `find`
+  if (items.find(item => item.id === id) !== undefined) {
+    return  items.find(item => item.id === id);
+  } else {
+    return `Item with id ${id} not found.`;
+  }
 }
 
 /**
@@ -53,6 +67,12 @@ function getItemById(items, id) {
  */
 function getItemPriceByName(items, name) {
   // TODO: use a loop!
+  for (item in items) {
+    if (items[item].name === name) {
+      return items[item].price;
+    }
+  }
+  return `Item with name ${name} not found.`;  
 }
 
 /**
@@ -62,6 +82,7 @@ function getItemPriceByName(items, name) {
  */
 function getItemsByCategory(items, category) {
   // TODO: use `filter`
+  return items.filter(item => item.category === category);
 }
 
 /**
@@ -70,14 +91,18 @@ function getItemsByCategory(items, category) {
  */
 function countItems(items) {
   // TODO: use `reduce`
+  items.reduce((count, item) => count + item.quantity, 0);
+  return items.reduce((count, item) => count + item.quantity, 0);
 }
-
+console.log(`Total number of items in stock: ${countItems(inventory)}`);
 /**
  * @param {Item[]} items - array of items
  * @returns {number} the cost of all given items
  */
 function getTotalPrice(items) {
   // TODO: use `reduce`
+  items.reduce((total, item) => total + (item.price * item.quantity), 0);
+  return items.reduce((total, item) => total + (item.price * item.quantity), 0);
 }
 
 // === READ BUT DO NOT CHANGE THE CODE BELOW ===
@@ -90,9 +115,9 @@ console.log(getUppercaseNames(inventory));
 
 console.log(`In total, we have ${countItems(inventory)} items in stock.`);
 
-const totalCost = getTotalPrice(inventory);
+const totalCost = getTotalPrice(inventory).toFixed(2);
 console.log(
-  `It would cost $${totalCost?.toFixed(2)} to purchase everything in stock.`
+  `It would cost $${totalCost} to purchase everything in stock.`
 );
 
 const itemId = prompt("Enter the ID of an item:", "1");
